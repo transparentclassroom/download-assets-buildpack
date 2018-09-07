@@ -1,0 +1,27 @@
+#!/bin/sh
+# bin/compile <build-dir> <cache-dir>
+
+# fail fast
+set -e
+
+# debug
+# set -x
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+BUILDPACK_DIR="$(dirname $(dirname $0))"
+
+AWS_DIR=$CACHE_DIR/awscli
+
+if [ -d $AWS_DIR ]; then
+  echo "AWS CLI found in cache"
+else
+  $BUILDPACK_DIR/install_awscli $AWS_DIR
+fi
+
+export PATH=$AWS_DIR/bin:$PATH
+
+echo "---------> Copying files down from S3"
+
+aws s3 cp s3://build.transparentclassroom.com/builds/BUILD_NUMBER $BUILD_DIR/BUILD_NUMBER
+aws s3 sync s3://build.transparentclassroom.com/builds/`cat $BUILD_DIR/BUILD_NUMBER`/webpack $BUILD_DIR/public/webpack

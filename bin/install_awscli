@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# bin/install_awscli.sh <output-dir>
+
+# fail fast
+set -e
+
+# debug
+# set -x
+
+# config
+OUTPUT_DIR=$1
+AWS_CLI_URL="https://s3.amazonaws.com/aws-cli/awscli-bundle.zip"
+
+echo "-----> Downloading AWS CLI"
+curl --progress-bar -o /tmp/awscli-bundle.zip $AWS_CLI_URL
+unzip -o -qq -d "/tmp" /tmp/awscli-bundle.zip
+
+
+echo "-----> Installing AWS CLI"
+chmod +x /tmp/awscli-bundle/install
+/tmp/awscli-bundle/install -i $OUTPUT_DIR
+chmod u+x $OUTPUT_DIR/bin/aws
+mkdir ~/.aws
+
+cat >> ~/.aws/credentials << EOF
+[default]
+aws_access_key_id = $AMAZON_ACCESS_KEY_ID
+aws_secret_access_key = $AMAZON_SECRET_ACCESS_KEY
+EOF
+
+cat >> ~/.aws/config << EOF
+[default]
+region = $AMAZON_REGION
+output = json
+EOF
+
+#cleaning up...
+rm -rf /tmp/awscli-bundle*
+
+echo "-----> AWS CLI installation done"
