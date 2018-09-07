@@ -5,7 +5,7 @@
 set -e
 
 # debug
-# set -x
+set -x
 
 # config
 OUTPUT_DIR=$1
