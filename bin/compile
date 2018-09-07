@@ -19,7 +19,7 @@ else
   ls $BUILDPACK_DIR
 
   echo 'about to croak'
-  $BUILDPACK_DIR/install_awscli $AWS_DIR
+  $BUILDPACK_DIR/bin/install_awscli $AWS_DIR
 fi
 
 export PATH=$AWS_DIR/bin:$PATH
