@@ -1,7 +1,6 @@
 #!/bin/sh
 # bin/detect <build-dir>
 
-echo 'awscli'
 if [ -d $1/public ]; then
   echo "Download Assets Buildpack"
   exit 0
