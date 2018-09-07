@@ -16,9 +16,6 @@ AWS_DIR=$CACHE_DIR/awscli
 if [ -d $AWS_DIR ]; then
   echo "AWS CLI found in cache"
 else
-  ls $BUILDPACK_DIR
-
-  echo 'about to croak'
   $BUILDPACK_DIR/bin/install_awscli $AWS_DIR
 fi
 
@@ -27,4 +24,6 @@ export PATH=$AWS_DIR/bin:$PATH
 echo "---------> Copying files down from S3"
 
 aws s3 cp s3://build.transparentclassroom.com/builds/BUILD_NUMBER $BUILD_DIR/BUILD_NUMBER
+
+echo "about to aws s3 sync s3://build.transparentclassroom.com/builds/`cat $BUILD_DIR/BUILD_NUMBER`/webpack $BUILD_DIR/public/webpack"
 aws s3 sync s3://build.transparentclassroom.com/builds/`cat $BUILD_DIR/BUILD_NUMBER`/webpack $BUILD_DIR/public/webpack
