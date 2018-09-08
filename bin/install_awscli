@@ -24,7 +24,7 @@ export_env_dir() {
   fi
 }
 
-export_env_dir()
+export_env_dir(); 
 
 echo "-----> Downloading AWS CLI"
 curl --progress-bar -o /tmp/awscli-bundle.zip $AWS_CLI_URL
