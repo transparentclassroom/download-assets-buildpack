@@ -11,4 +11,6 @@ cd $1
 BUILD_NUMBER=`curl https://s3.amazonaws.com/build.transparentclassroom.com/builds/BUILD_NUMBER`
 curl https://s3.amazonaws.com/build.transparentclassroom.com/builds/$BUILD_NUMBER/webpack.tgz -o webpack.tgz
 tar xvf webpack.tgz
+curl https://s3.amazonaws.com/build.transparentclassroom.com/builds/$BUILD_NUMBER/assets.tgz -o assets.tgz
+tar xvf assets.tgz
 
